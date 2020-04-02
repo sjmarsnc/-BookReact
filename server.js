@@ -3,7 +3,8 @@ const path = require("path");
 const PORT = process.env.PORT || 3001;
 const app = express();
 
-import API from "./routes/apiRoutes";  
+import API from "./routes/apiRoutes"; 
+import APIkey from "./APIkey";   
 
 // Define middleware here
 app.use(express.urlencoded({ extended: true }));
@@ -14,8 +15,11 @@ if (process.env.NODE_ENV === "production") {
 }
 
 // Define API routes here
-app.get("/api/search/:searchValue") { 
-   console.log("GET: /api/search/:searchValue   Get books from google");   
+app.get("/api/search/:searchValue", (req, res) => { 
+   console.log("GET: /api/search/:searchValue   Get books from google"); 
+   axios.get("https://www.googleapis.com/books/v1/volumes?q=" + req.params.searchValue + "&key=" + APIkey)
+     .then( return results)
+     .catch( err => console.log(err));  
 }
 
 app.get("/api/saved/") { 
