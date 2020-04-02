@@ -11,12 +11,12 @@ function Nav() {
           </a>
         </li>
         <li className="nav-item">
-          <a className="nav-link" href="#">
+          <a className="nav-link" href="/">
             Search
           </a>
         </li>
         <li className="nav-item">
-          <a className="nav-link disabled" href="#">
+          <a className="nav-link disabled" href="/saved">
             Saved
           </a>
         </li>
