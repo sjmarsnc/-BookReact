@@ -3,6 +3,8 @@ const path = require("path");
 const PORT = process.env.PORT || 3001;
 const app = express();
 
+import API from "./routes/apiRoutes";  
+
 // Define middleware here
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -12,7 +14,14 @@ if (process.env.NODE_ENV === "production") {
 }
 
 // Define API routes here
+app.get("/api/search/:searchValue") { 
+   console.log("GET: /api/search/:searchValue   Get books from google");   
+}
 
+app.get("/api/saved/") { 
+   console.log("GET: /api/saved/  Get list of saved books");
+   API.getSaved();  
+}
 // Send every other request to the React app
 // Define any API routes before this runs
 app.get("*", (req, res) => {

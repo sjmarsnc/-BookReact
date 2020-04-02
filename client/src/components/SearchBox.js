@@ -2,7 +2,7 @@ import React from "react";
 
 const SearchBox = () => {
   return (
-    <div className="card shadow-lg">
+    <div className="card shadow-lg mt-3">
       <div className="card-header">Book Search</div>
       <input
         name="searchValue"
