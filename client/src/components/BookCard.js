@@ -12,7 +12,9 @@ const BookCard = props => {
         </div>
         <div className="flex-right">
           <button>View</button>
-          <button data-id={props.id}>Save</button>
+          <button data-id={props.id} type={props.button2}>
+            {props.button2}
+          </button>
         </div>
       </div>
       <div className="card-body d-flex">

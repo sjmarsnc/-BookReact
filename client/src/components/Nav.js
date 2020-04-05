@@ -17,7 +17,11 @@ function Nav(props) {
         </li>
         <li className="nav-item">
           <a
-            className={`nav-link ${props.enableSaved ? "" : "disabled"}`}
+            className={`nav-link ${
+              props.enableSaved
+                ? ""
+                : "disabled data-toggle='tooltip' title='No saved books yet'"
+            }`}
             href="/saved"
           >
             Saved

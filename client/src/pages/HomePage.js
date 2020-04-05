@@ -24,16 +24,18 @@ class HomePage extends Component {
   };
 
   handleSearchBtn = event => {
-    console.log("Search button pushed: ", this.state.searchValue);
+    // console.log("Search button pushed: ", this.state.searchValue);
     API.searchBooks(this.state.searchValue)
       .then(response => {
-        this.setState({ books: response });
+        this.setState({ books: response.data });
         console.log("Books in state: ", this.state.books);
       })
       .catch(err => console.log(err));
   };
 
-  componentDidMount() {}
+  componentDidMount() {
+    // get saved list and store in state to enable the search bar
+  }
 
   render() {
     return (
