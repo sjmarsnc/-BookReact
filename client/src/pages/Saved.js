@@ -12,7 +12,7 @@ function Saved() {
         <Jumbotron />
         <Row>
           <Col size="12">
-            <BookList title="Saved Books" />
+            <BookList sectionTitle="Saved Books" />
           </Col>
         </Row>
       </Container>

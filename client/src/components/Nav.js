@@ -1,7 +1,7 @@
 import React from "react";
 import "./nav.css";
 
-function Nav() {
+function Nav(props) {
   return (
     <nav className="navbar navbar-light ">
       <ul className="nav">
@@ -11,12 +11,15 @@ function Nav() {
           </a>
         </li>
         <li className="nav-item">
-          <a className="nav-link" href="/">
+          <a className="nav-link active" href="/">
             Search
           </a>
         </li>
         <li className="nav-item">
-          <a className="nav-link disabled" href="/saved">
+          <a
+            className={`nav-link ${props.enableSaved ? "" : "disabled"}`}
+            href="/saved"
+          >
             Saved
           </a>
         </li>
