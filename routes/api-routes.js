@@ -4,22 +4,6 @@ const axios = require("axios");
 const APIkey = require("./APIkey");
 const path = require("path");
 
-router.get("");
-
-router.get("/recipes", (req, res) => {
-  // Use a regular expression to search titles for req.query.q
-  // using case insensitive match. https://docs.mongodb.com/manual/reference/operator/query/regex/index.html
-  db.Recipe.find({
-    title: { $regex: new RegExp(req.query.q, "i") }
-  })
-    .then(recipes => res.json(recipes))
-    .catch(err => res.status(422).end());
-});
-
-module.exports = router;
-
-// routes
-
 module.exports = function(app) {
   app.get("/api/search/:searchValue", (req, res) => {
     console.log("GET: /api/search/:searchValue   Get books from google");
@@ -32,16 +16,37 @@ module.exports = function(app) {
     axios
       .get(searchURL)
       .then(results => {
-        console.log("Results: ", results.data.items);
-        res.json(results.data.items);
+        // console.log("Results: ", results.data.items);
+        let searchResults = results.data.items.map(book => ({
+          googleId: book.id,
+          title: book.volumeInfo.title,
+          authors: book.volumeInfo.authors,
+          description: book.volumeInfo.description,
+          link: book.volumeInfo.infoLink,
+          images: book.volumeInfo.imageLinks
+        }));
+        console.log(searchResults);
+        res.json(searchResults);
       })
       .catch(err => console.log(err));
   });
 
   app.get("/api/saved/", (req, res) => {
     console.log("GET: /api/saved/  Get list of saved books");
-    // API.getSaved();
   });
+
+  app.get("/api/book/:id", (req, res) => {
+    let searchURL =
+      "https://www.googleapis.com/books/v1/volumes/" +
+      req.params.id +
+      "?key=" +
+      APIKey.APIkey;
+    axios.get(searchUrl).then(results => {
+      res.json(results.data);
+    });
+  });
+
+  app.post("/api/save/:id", (req, res) => {});
 
   // Send every other request to the React app
   // Define any API routes before this runs

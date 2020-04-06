@@ -2,7 +2,7 @@ import React from "react";
 import BookCard from "./BookCard";
 
 const BookList = ({ sectionTitle, books }) => {
-  console.log("In BookList: ", books);
+  //   console.log("In BookList: ", books);
 
   return (
     <div className="card shadow-lg mt-4">
@@ -10,18 +10,14 @@ const BookList = ({ sectionTitle, books }) => {
       <div className="card-body">
         {books.map(book => (
           <BookCard
-            title={book.volumeInfo.title}
-            authors={book.volumeInfo.authors[0]}
-            image={
-              book.volumeInfo.imageLinks
-                ? book.volumeInfo.imageLinks.thumbnail
-                : ""
-            }
-            desc={book.volumeInfo.description}
-            googleLink={book.volumeInfo.infoLink}
+            title={book.title}
+            authors={book.authors.join(", ")}
+            image={book.images ? book.images.thumbnail : ""}
+            desc={book.description}
+            googleLink={book.link}
             button2={sectionTitle === "Saved Books" ? "Delete" : "Save"}
-            key={book.id}
-            id={book.id}
+            key={book.googleId}
+            id={book.googleId}
           />
         ))}
       </div>
