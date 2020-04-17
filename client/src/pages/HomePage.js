@@ -33,16 +33,22 @@ const HomePage = () => {
         console.log("response from search: ", response.data);
         setGlobalState({
           ...globalState,
-          searchList: [...response.data],
+          searchList: response.data,
         });
         console.log("Searched books: ", globalState.searchList);
       })
       .catch((err) => console.log(err));
   };
 
+  const handleViewClick = (link) => {
+    console.log("View button pushed: ", link);
+    window.open(link, "_blank");
+  };
+
   const handleSaveClick = (id) => {
-    console.log("Save button: ", id);
+    console.log("Save button pushed: ", id);
     var newbook = globalState.searchList.find((book) => book.googleId === id);
+    console.log("newbook: ", newbook);
     API.saveBook(newbook)
       .then((response) => {
         setGlobalState({
@@ -82,6 +88,7 @@ const HomePage = () => {
               <BookList
                 sectionTitle="Search Results"
                 button2onClick={handleSaveClick}
+                viewButtonOnClick={handleViewClick}
                 books={globalState.searchList}
               />
             </Col>

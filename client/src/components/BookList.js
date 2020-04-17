@@ -24,6 +24,7 @@ const BookList = (props) => {
                 button2={
                   props.sectionTitle === "Saved Books" ? "Delete" : "Save"
                 }
+                viewButtonOnClick={props.viewButtonOnClick}
                 button2onClick={props.button2onClick}
                 key={book.googleId}
                 id={book.googleId}
