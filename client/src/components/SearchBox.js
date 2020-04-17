@@ -1,9 +1,14 @@
 import React from "react";
 
-const SearchBox = ({ searchValue, searchChange, searchBtn }) => {
+const SearchBox = (props) => {
+  console.log("In SearchBox, props: ", props);
+  const { searchValue, searchChange, searchBtn } = props;
   return (
     <div className="card shadow-lg mt-3">
       <div className="card-header text-left">Book Search</div>
+      <div className="alert alert-danger d-none">
+        Please enter a search string before attempting to search!
+      </div>
       <input
         name="searchValue"
         type="text"

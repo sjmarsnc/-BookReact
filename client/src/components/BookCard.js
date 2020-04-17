@@ -1,7 +1,7 @@
 import React from "react";
 import "./bookCard.css";
 
-const BookCard = props => {
+const BookCard = (props) => {
   console.log(props);
   return (
     <div className="card">
@@ -11,8 +11,16 @@ const BookCard = props => {
           <span> Written by {props.authors}</span>
         </div>
         <div className="flex-right">
-          <button>View</button>
-          <button data-id={props.id} type={props.button2}>
+          <button>
+            <a href={props.link}>View</a>
+          </button>
+          <button
+            data-id={props.id}
+            type={props.button2}
+            onClick={() => {
+              props.button2onClick(props.id);
+            }}
+          >
             {props.button2}
           </button>
         </div>

@@ -1,28 +1,32 @@
-import React, { Component } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Nav from "../components/Nav";
 import BookList from "../components/BookList";
 import Jumbotron from "../components/Jumbotron";
 import { Col, Row, Container } from "../components/Grid";
+import GlobalContext from "../utils/GlobalState";
 import API from "../utils/API";
 
-class Saved extends Component {
+const Saved = () => {
   // need to check for saved list in case someone goes
   // directly to the /saved address
 
-  state = {
-    savedList: [],
-    savedCount: 0
-  };
+  const { savedList, savedLoaded, savedCount } = useContext(GlobalContext);
 
-  componentDidMount() {
+  const [globalState, setGlobalState] = useState({});
+
+  useEffect(() => {
     API.getSavedBooks()
-      .then(savedList => {
-        this.setState({ savedList });
-        this.setState({ savedCount: savedList.length });
-        console.log("Books in state: ", this.state.savedList);
+      .then((savedList) => {
+        setGlobalState({
+          ...globalState,
+          savedCount: savedList.length,
+          savedList: savedList,
+        });
+        console.log("Books in state: ", savedList);
       })
-      .catch(err => console.log(err));
-    this.setState({
+      .catch((err) => console.log(err));
+    setGlobalState({
+      ...globalState,
       savedCount: 1,
       savedList: [
         {
@@ -35,34 +39,29 @@ class Saved extends Component {
             smallThumbnail:
               "http://books.google.com/books/content?id=pIs9Em38dAoC&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
             thumbnail:
-              "http://books.google.com/books/content?id=pIs9Em38dAoC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+              "http://books.google.com/books/content?id=pIs9Em38dAoC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
           },
           link:
-            "http://books.google.com/books?id=pIs9Em38dAoC&dq=Algernon&hl=&source=gbs_api"
-        }
-      ]
+            "http://books.google.com/books?id=pIs9Em38dAoC&dq=Algernon&hl=&source=gbs_api",
+        },
+      ],
     });
-    console.log("State: ", this.state);
-  }
+    console.log("State: ", globalState);
+  }, []);
 
-  render() {
-    return (
-      <>
-        <Nav />
-        <Container>
-          <Jumbotron />
-          <Row>
-            <Col size="12">
-              <BookList
-                sectionTitle="Saved Books"
-                books={this.state.savedList}
-              />
-            </Col>
-          </Row>
-        </Container>
-      </>
-    );
-  }
-}
+  return (
+    <>
+      <Nav />
+      <Container>
+        <Jumbotron />
+        <Row>
+          <Col size="12">
+            <BookList sectionTitle="Saved Books" books={this.state.savedList} />
+          </Col>
+        </Row>
+      </Container>
+    </>
+  );
+};
 
 export default Saved;
