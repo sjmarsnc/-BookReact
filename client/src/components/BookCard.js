@@ -3,7 +3,7 @@ import "./bookCard.css";
 import { Row } from "./Grid";
 
 const BookCard = (props) => {
-  console.log(props);
+  // console.log(props);
   return (
     <div className="card">
       <div className="card-header d-flex">

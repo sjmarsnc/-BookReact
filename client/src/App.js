@@ -23,49 +23,47 @@ function App() {
   useEffect(() => {
     API.getSavedBooks()
       .then((response) => {
-        console.log("Get getSavedBooks call: ", response.data);
         setGlobalState({
           ...globalState,
           savedCount: response.data.length,
           savedList: response.data,
         });
-        console.log("Books in state: ", globalState.savedList);
       })
       .catch((err) => console.log(err));
   }, []);
 
   const handleSearchChange = (event) => {
-    // search field changes, clear the search result list
-    console.log("In handleSearchChange:", event.target.value);
+    // search field changes
     setGlobalState({
       ...globalState,
       searchValue: event.target.value,
     });
   };
 
+  function isNotSaved(id) {
+    if (globalState.savedList.find(book => book.googleId === id)) return false;
+    return true;
+  }
+
   const handleSearchBtn = (event) => {
-    console.log("Search button pushed: ", globalState.searchValue);
     API.searchBooks(globalState.searchValue)
       .then((response) => {
-        console.log("response from search: ", response.data);
+        // filter out any saved books 
+        var keepSearch = response.data.filter(book => isNotSaved(book.googleId));
         setGlobalState({
           ...globalState,
           searchList: response.data,
         });
-        console.log("Searched books: ", globalState.searchList);
       })
       .catch((err) => console.log(err));
   };
 
   const handleViewClick = (link) => {
-    console.log("View button pushed: ", link);
     window.open(link, "_blank");
   };
 
   const handleSaveClick = (id) => {
-    console.log("Save button pushed: ", id);
     var newbook = globalState.searchList.find((book) => book.googleId === id);
-    console.log("newbook: ", newbook);
     API.saveBook(newbook)
       .then((response) => {
         setGlobalState({
@@ -75,18 +73,27 @@ function App() {
         });
       })
       .catch((err) => console.log(err));
-    console.log("Saved books: ", globalState.savedList);
   };
 
-  const handleDeleteClick = (id) => { };
+  const handleDeleteClick = (id) => {
+    var deleteIndex = globalState.searchList.find((book) => book.googleId === id);
+    API.deleteSavedBook(id)
+      .then((response) => {
+        setGlobalState({
+          ...globalState,
+          savedList: globalState.savedList.splice(deleteIndex, 1),
+          savedCount: globalState.savedCount - 1
+        });
+      })
+      .catch((err) => console.log(err));
 
+  };
 
 
   return (
     <div className="App">
       <Router basename={"/BookReact"}>
         <GlobalContext.Provider value={globalState}>
-          {console.log("Saved count: ", globalState.savedCount)}
           <Nav enableSaved={globalState.savedCount === 0 ? false : true} />
           <Switch>
             <Route exact path={["/", "/HomePage"]}  >

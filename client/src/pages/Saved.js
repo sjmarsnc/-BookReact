@@ -11,24 +11,6 @@ const Saved = (props) => {
 
   const globalState = useContext(GlobalContext);
 
-  // const { savedList, savedLoaded, savedCount } = useContext(GlobalContext);
-
-  // const [globalState, setGlobalState] = useState({});
-
-  // useEffect(() => {
-  //   API.getSavedBooks()
-  //     .then((response) => {
-  //       console.log("Get getSavedBooks call: ", response.data);
-  //       setGlobalState({
-  //         ...globalState,
-  //         savedCount: response.data.length,
-  //         savedList: response.data,
-  //       });
-  //       console.log("Books in state: ", globalState.savedList);
-  //     })
-  //     .catch((err) => console.log(err));
-  // }, []);
-
   return (
     <GlobalContext.Provider value={globalState}>
       <Container>
