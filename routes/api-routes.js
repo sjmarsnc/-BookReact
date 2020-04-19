@@ -1,20 +1,21 @@
 const router = require("express").Router();
 const db = require("../models");
 const axios = require("axios");
-const APIkey = require("./APIkey");
 const path = require("path");
 const mongoose = require("mongoose");
-const Book = require("../models/Book");
+require("dotenv").config();
+// const Book = require("../models/Book");
 
 module.exports = function (app) {
   app.get("/api/search/:searchValue", (req, res) => {
     console.log("GET: /api/search/:searchValue   Get books from google");
+
     let searchURL =
       "https://www.googleapis.com/books/v1/volumes?q=" +
       req.params.searchValue +
       "&key=" +
-      APIkey.APIkey;
-    console.log("Search URL: ", searchURL);
+      process.env.GOOGLEAPIKEY;
+
     axios
       .get(searchURL)
       .then((results) => {
@@ -45,25 +46,27 @@ module.exports = function (app) {
     });
   });
 
-  app.post("/api/save/", (req, res) => {
-    console.log("In /api/save/ ", req.body);
-    Book.create(req.body)
+  app.post("/api/books/", (req, res) => {
+    // add a book to saved list 
+    // console.log("POST /api/books/ ", req.body);
+    db.Book.create(req.body)
       .then((result) => {
-        console.log(result);
         res.status(200);
       })
       .catch((err) => res.console.log(err));
   });
 
-  app.delete("/api/delete/:id", (req, res) => {
-    Book.deleteOne({
+  app.delete("/api/books/:id", (req, res) => {
+    // delete a book from the saved list 
+    db.Book.deleteOne({
       googleId: req.params.id,
     }).then((result) => console.log(result));
   });
 
-  app.get("/api/saved", (req, res) => {
-    Book.find({}).then((results) => {
-      console.log("/api/saved/ :", results);
+  app.get("/api/books", (req, res) => {
+    // get all saved books 
+    db.Book.find({}).then((results) => {
+      console.log("GET /api/books/ :", results);
       res.json(results);
     });
   });

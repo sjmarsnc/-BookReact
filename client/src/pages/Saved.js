@@ -1,15 +1,17 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import BookList from "../components/BookList";
 import Jumbotron from "../components/Jumbotron";
 import { Col, Row, Container } from "../components/Grid";
 import GlobalContext from "../utils/GlobalState";
-import API from "../utils/API";
 
 const Saved = (props) => {
   // need to check for saved list in case someone goes
   // directly to the /saved address
 
   const globalState = useContext(GlobalContext);
+
+  useEffect(() => { },
+    [globalState]);
 
   return (
     <GlobalContext.Provider value={globalState}>

@@ -1,6 +1,5 @@
 import React from "react";
 import "./bookCard.css";
-import { Row } from "./Grid";
 
 const BookCard = (props) => {
   // console.log(props);

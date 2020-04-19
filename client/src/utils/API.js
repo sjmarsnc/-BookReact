@@ -9,14 +9,14 @@ export default {
   // add a book to saved list
   saveBook: function (newbook) {
     // how to pass as "body"
-    return axios.post("/api/save/", newbook);
+    return axios.post("/api/books/", newbook);
   },
   // delete a book from the saved list
   deleteSavedBook: function (id) {
-    return axios.delete("/api/delete/" + id);
+    return axios.delete("/api/books/" + id);
   },
   // get all books in the saved list
   getSavedBooks: function () {
-    return axios.get("/api/saved");
+    return axios.get("/api/books");
   },
 };

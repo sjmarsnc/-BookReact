@@ -1,8 +1,7 @@
 import React from "react";
-import { Container, Col, Row } from "./Grid";
 
 const SearchBox = (props) => {
-  console.log("In SearchBox, props: ", props);
+  // console.log("In SearchBox, props: ", props);
   const { searchValue, searchChange, searchBtn } = props;
   return (
     <div className="card shadow-lg mt-3">
