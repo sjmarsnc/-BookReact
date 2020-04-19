@@ -2,6 +2,7 @@ const express = require("express");
 const path = require("path");
 const PORT = process.env.PORT || 3001;
 var app = express();
+const mongoose = require("mongoose");
 
 var API = require("./routes/api-routes");
 // var APIkey = require("./routes/APIkey");
@@ -16,6 +17,13 @@ if (process.env.NODE_ENV === "production") {
 } else {
   app.use(express.static("public"));
 }
+
+// Connect to the Mongo DB
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/googlebooks", {
+  useUnifiedTopology: true,
+  useNewUrlParser: true,
+  useCreateIndex: true,
+});
 
 // routes
 require("./routes/api-routes.js")(app);

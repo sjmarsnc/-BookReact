@@ -4,7 +4,7 @@ const axios = require("axios");
 const APIkey = require("./APIkey");
 const path = require("path");
 const mongoose = require("mongoose");
-const Book = require("../models");
+const Book = require("../models/Book");
 
 module.exports = function (app) {
   app.get("/api/search/:searchValue", (req, res) => {
@@ -19,22 +19,19 @@ module.exports = function (app) {
       .get(searchURL)
       .then((results) => {
         // console.log("Results: ", results.data.items);
+        // let image = book.volumeInfo.imageLinks ? book.volumeInfo.images.thumbnail : "";
         let searchResults = results.data.items.map((book) => ({
           googleId: book.id,
           title: book.volumeInfo.title,
           authors: book.volumeInfo.authors,
           description: book.volumeInfo.description,
           link: book.volumeInfo.infoLink,
-          images: book.volumeInfo.imageLinks,
+          image: book.volumeInfo.imageLinks,
         }));
         // console.log(searchResults);
         res.json(searchResults);
       })
       .catch((err) => console.log(err));
-  });
-
-  app.get("/api/saved/", (req, res) => {
-    console.log("GET: /api/saved/  Get list of saved books");
   });
 
   app.get("/api/book/:id", (req, res) => {
@@ -55,7 +52,7 @@ module.exports = function (app) {
         console.log(result);
         res.status(200);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => res.console.log(err));
   });
 
   app.delete("/api/delete/:id", (req, res) => {
@@ -67,6 +64,7 @@ module.exports = function (app) {
   app.get("/api/saved", (req, res) => {
     Book.find({}).then((results) => {
       console.log("/api/saved/ :", results);
+      res.json(results);
     });
   });
 

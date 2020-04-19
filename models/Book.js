@@ -5,32 +5,32 @@ const booksSchema = new Schema({
   googleId: {
     type: String,
     required: true,
-    trim: true
+    trim: true,
   },
   title: {
     type: String,
     required: true,
-    trim: true
+    trim: true,
   },
   authors: {
     type: [String],
-    default: [""]
+    default: [""],
   },
   description: {
     type: String,
-    trim: true
+    trim: true,
   },
   // url for books web page - unique index
   link: {
     type: String,
     default: "",
-    unique: true
+    unique: true,
   },
   //url string for thumbnail image
   image: {
-    type: String,
-    default: ""
-  }
+    type: Object,
+    default: {},
+  },
 });
 
 const Book = mongoose.model("googlebooks", booksSchema);

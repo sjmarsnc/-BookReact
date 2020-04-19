@@ -2,6 +2,7 @@ nav {
   border-bottom: 1px solid #cccccc;
 }
 
-nav-link {
+a.nav-link {
   font-size: smaller;
+  color: #333333 !important; 
 }
