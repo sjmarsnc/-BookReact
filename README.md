@@ -18,7 +18,7 @@ This app uses the following technologies:
 - Express / Node.js
 - Bootstrap css framework
 
-
+It is deployed on [Heroku](https://sjmarsnc-book-react.herokuapp.com/)
  
 ### Internals 
 
