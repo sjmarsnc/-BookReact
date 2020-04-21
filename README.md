@@ -30,9 +30,11 @@ POST `/api/books` - Saves a new book to the database (pass in the object as retu
 
 DELETE `/api/books/:id` - Deletes a book from the database by Mongo `_id`.
 
-GET `/api/search/:searchString - Sends the search string to the Google book API, looks for the string in any field 
+GET `/api/search/:searchString` - Sends the search string to the Google book API, looks for the string in any field 
 
 ### Possible future enhancements 
+
+- Disable search button if nothing save, with a tooltip that pops up over it to say why it is grayed out 
 
 - Let search be specific to title, author, or subject 
 intitle, inauthor, subject, see how to string together below
