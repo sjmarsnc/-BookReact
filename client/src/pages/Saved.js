@@ -10,9 +10,6 @@ const Saved = (props) => {
 
   const globalState = useContext(GlobalContext);
 
-  useEffect(() => { },
-    [globalState]);
-
   return (
     <GlobalContext.Provider value={globalState}>
       <Container>

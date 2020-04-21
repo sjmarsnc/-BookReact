@@ -51,7 +51,7 @@ module.exports = function (app) {
     // console.log("POST /api/books/ ", req.body);
     db.Book.create(req.body)
       .then((result) => {
-        res.status(200);
+        res.json(result);
       })
       .catch((err) => res.console.log(err));
   });
@@ -60,7 +60,7 @@ module.exports = function (app) {
     // delete a book from the saved list 
     db.Book.deleteOne({
       googleId: req.params.id,
-    }).then((result) => console.log(result));
+    }).then((result) => res.json(result));
   });
 
   app.get("/api/books", (req, res) => {

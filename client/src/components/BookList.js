@@ -4,7 +4,6 @@ import GlobalContext from "../utils/GlobalState";
 
 const BookList = (props) => {
   const globalState = useContext(GlobalContext);
-  console.log("In BookList: ", props.books);
 
   return (
     <div className="card shadow-lg mt-4">

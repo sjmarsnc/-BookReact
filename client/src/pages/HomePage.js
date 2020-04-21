@@ -9,9 +9,6 @@ import "../components/common.css";
 const HomePage = (props) => {
   const globalState = useContext(GlobalContext);
 
-  useEffect(() => { },
-    [globalState]);
-
   return (
     <>
 

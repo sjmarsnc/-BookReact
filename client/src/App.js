@@ -14,6 +14,7 @@ function App() {
   const [globalState, setGlobalState] = useState({
     searchValue: "",
     searchList: [],
+    searchLoaded: true,
     savedLoaded: false,
     savedCount: 0,
     savedList: [],
@@ -21,16 +22,33 @@ function App() {
   });
 
   useEffect(() => {
-    API.getSavedBooks()
-      .then((response) => {
-        setGlobalState({
-          ...globalState,
-          savedCount: response.data.length,
-          savedList: response.data,
-        });
-      })
-      .catch((err) => console.log(err));
-  }, []);
+    if (!globalState.savedLoaded) {
+      API.getSavedBooks()
+        .then((response) => {
+          setGlobalState({
+            ...globalState,
+            savedLoaded: true,
+            savedCount: response.data.length,
+            savedList: response.data,
+          });
+        })
+        .catch((err) => console.log(err));
+    }
+    if (!globalState.searchLoaded) {
+
+      API.searchBooks(globalState.searchValue)
+        .then((response) => {
+          // filter out any saved books 
+          var keepSearch = response.data.filter(book => isNotSaved(book.googleId));
+          setGlobalState({
+            ...globalState,
+            searchList: keepSearch,
+          });
+        })
+        .catch((err) => console.log(err));
+    }
+
+  }, [globalState.savedLoaded, globalState.searchLoaded]);
 
   const handleSearchChange = (event) => {
     // search field changes
@@ -46,16 +64,10 @@ function App() {
   }
 
   const handleSearchBtn = (event) => {
-    API.searchBooks(globalState.searchValue)
-      .then((response) => {
-        // filter out any saved books 
-        var keepSearch = response.data.filter(book => isNotSaved(book.googleId));
-        setGlobalState({
-          ...globalState,
-          searchList: response.data,
-        });
-      })
-      .catch((err) => console.log(err));
+    setGlobalState({
+      ...globalState,
+      searchLoaded: false
+    });
   };
 
   const handleViewClick = (link) => {
@@ -68,6 +80,7 @@ function App() {
       .then((response) => {
         setGlobalState({
           ...globalState,
+          savedLoaded: false,
           savedList: [...globalState.savedList, newbook],
           savedCount: globalState.savedCount + 1,
         });
@@ -76,11 +89,12 @@ function App() {
   };
 
   const handleDeleteClick = (id) => {
-    var deleteIndex = globalState.searchList.find((book) => book.googleId === id);
+    var deleteIndex = globalState.savedList.find((book) => book.googleId === id);
     API.deleteSavedBook(id)
       .then((response) => {
         setGlobalState({
           ...globalState,
+          savedLoaded: false,
           savedList: globalState.savedList.splice(deleteIndex, 1),
           savedCount: globalState.savedCount - 1
         });
