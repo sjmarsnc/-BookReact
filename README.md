@@ -5,7 +5,7 @@
 This app uses the Google Books Search api and React to let you search the books database based on a string that you specify. You can then:
 
 - view details on any of those books
-- mark a book as saved
+- mark a book as saved (it will no longer show up in the search results once saved)
 - see a list of your saved books
 - drop a book from your saved list
 
@@ -17,6 +17,17 @@ This app uses the following technologies:
 - MongoDB
 - Express / Node.js
 - Bootstrap css framework
+- Context 
+
+It has two main pages.  The home page you can search from: 
+
+![Home page](./Application.png) 
+
+And the Saved page where saved books are shown.  
+
+![Saved page](./Application2.png) 
+
+Clicking on the View button from either page shows the Google page details for that book.  
 
 It is deployed on [Heroku](https://sjmarsnc-book-react.herokuapp.com/)
  
