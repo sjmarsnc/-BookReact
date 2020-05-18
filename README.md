@@ -34,7 +34,7 @@ GET `/api/search/:searchString` - Sends the search string to the Google book API
 
 ### Possible future enhancements 
 
-- Disable search button if nothing save, with a tooltip that pops up over it to say why it is grayed out 
+- Disable Saved button if nothing has been saved, with a tooltip that pops up over it to say why it is grayed out 
 
 - Let search be specific to title, author, or subject 
 intitle, inauthor, subject, see how to string together below
